@@ -8,6 +8,6 @@ createConnection().then(async connection => {
   console.log(account1);
   const account2 = await AccountManager.createAccount(50);
   console.log(account2);
-  const transfer = await TransferManager.createTransfer({fromAccount: account1, toAccount: account2, amount: 10});
+  const transfer = await TransferManager.createTransfer({ fromAccount: account1, toAccount: account2, amount: 10 });
   console.log(transfer)
 }).catch(error => console.log(error));

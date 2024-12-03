@@ -15,7 +15,7 @@ export class Transfer {
   @Column('int')
   amount: number;
 
-  @Column('text', {nullable: true})
+  @Column('text', { nullable: true })
   state: any;
 
 }

@@ -9,5 +9,4 @@ export class Account {
   @Column('int')
   balance: number;
 
-
 }

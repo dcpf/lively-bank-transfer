@@ -10,11 +10,11 @@ interface ICreateTransferOptions {
 }
 
 export class TransferManager {
-  static get repository()  {
+  static get repository() {
     return AppDataSource.getRepository(Transfer);
   }
 
-  static async createTransfer({fromAccount, toAccount, amount, processImmediately}: ICreateTransferOptions ): Promise<Transfer> {
+  static async createTransfer({ fromAccount, toAccount, amount, processImmediately }: ICreateTransferOptions): Promise<Transfer> {
     return this.repository.save({
       fromAccount,
       toAccount,

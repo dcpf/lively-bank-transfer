@@ -30,12 +30,12 @@ export class TransferManager {
   }
 
   /**
-   * Lookup all transfers for an account that are either pending or submitted
+   * Lookup all outgoing transfers for an account that are either pending or submitted
    *
    * @param accountId 
    * @returns Transfer[]
    */
-  static async lookupPendingTransfers(accountId: number): Promise<Transfer[]> {
+  static async lookupPendingOutgoingTransfers(accountId: number): Promise<Transfer[]> {
     return await this.repository.find({
       where: { fromAccount: { id: accountId }, state: In(['pending', 'submitted']) },
       relations: {
@@ -46,7 +46,7 @@ export class TransferManager {
   }
 
   /**
-   * Get an account's available funds using the balance and any pending transfers
+   * Get an account's available funds using the balance and any pending outgoing transfers
    * 
    * @param acctId
    * @param excludedTransferIds - transfer IDs to exclude 
@@ -54,7 +54,7 @@ export class TransferManager {
    */
   static async getAvailableFunds(acctId: number, excludedTransferIds?: number[]): Promise<number> {
     const fromAcct = await AccountManager.lookupAccount(acctId);
-    const pendingTransfers = await this.lookupPendingTransfers(acctId);
+    const pendingTransfers = await this.lookupPendingOutgoingTransfers(acctId);
     const pendingTransferAmount = pendingTransfers.reduce<number>((acc, xfer) => {
       return excludedTransferIds?.includes(xfer.id) ? acc : acc + xfer.amount;
     },

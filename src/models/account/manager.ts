@@ -1,6 +1,7 @@
 import { UpdateResult } from "typeorm";
 import { Account } from "./entity";
 import { AppDataSource } from "../../lib/datasource";
+import { TransferManager } from "../transfer/manager";
 
 export class AccountManager {
   static get repository() {
@@ -30,7 +31,22 @@ export class AccountManager {
     return updateResult;
   }
 
-  static async reconcileBalances(id: string) {
+  static async reconcileBalances(id: number) {
+    const acct = await this.lookupAccount(id);
+    const transfers = await TransferManager.lookupAllTransfersForAccount(id);
+    let balance = acct.initialBalance;
+    transfers.forEach((xfer) => {
+      if (xfer.state === 'success') {
+        if (xfer.fromAccount.id === id) {
+          balance -= xfer.amount;
+        } else if (xfer.toAccount.id === id) {
+          balance += xfer.amount;
+        }
+      }
+    });
+    if (balance !== acct.balance) {
+      console.error(`Balance reconciliation failed for account ${id}. Expected: ${acct.balance}, actual: ${balance}`);
+    }
   }
 
 }

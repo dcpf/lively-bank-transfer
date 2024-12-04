@@ -10,4 +10,7 @@ createConnection().then(async connection => {
   await TransferManager.createTransfer({ fromAccount: account1, toAccount: account2, amount: 25, processImmediately: true });
   await TransferManager.createTransfer({ fromAccount: account1, toAccount: account2, amount: 15 });
   await TransferManager.createTransfer({ fromAccount: account1, toAccount: account2, amount: 1, processImmediately: true });
+  await TransferManager.createTransfer({ fromAccount: account2, toAccount: account1, amount: 5, processImmediately: true });
+  await AccountManager.reconcileBalances(account1.id);
+  await AccountManager.reconcileBalances(account2.id);
 }).catch(error => console.log(error));

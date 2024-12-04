@@ -29,15 +29,26 @@ export class TransferManager {
     });
   }
 
+  static async lookupAllTransfersForAccount(acctId: number): Promise<Transfer[]> {
+    return await this.repository.find({
+      where: [{ fromAccount: { id: acctId } }, { toAccount: { id: acctId } }],
+      relations: {
+        fromAccount: true,
+        toAccount: true,
+      }
+    });
+
+  }
+
   /**
    * Lookup all outgoing transfers for an account that are either pending or submitted
    *
    * @param accountId 
    * @returns Transfer[]
    */
-  static async lookupPendingOutgoingTransfers(accountId: number): Promise<Transfer[]> {
+  static async lookupPendingOutgoingTransfers(acctId: number): Promise<Transfer[]> {
     return await this.repository.find({
-      where: { fromAccount: { id: accountId }, state: In(['pending', 'submitted']) },
+      where: { fromAccount: { id: acctId }, state: In(['pending', 'submitted']) },
       relations: {
         fromAccount: true,
         toAccount: true,

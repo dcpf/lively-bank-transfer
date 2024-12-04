@@ -1,3 +1,12 @@
+### My Notes:
+
+* Are the accounts attached to the Transfer object supposed to be the latest? I would lean towards looking them up when needed, and only have "from" and "to" acct IDs in the Transfer object.
+* Assuming there will be some other process that submits transfers in "pending" state (I.e., when processImmediately !== true). Not implemented for this exercise.
+* Transfer records in "apiError" state can be retried at a later date/time. Not implemented for this exercise.
+* Obviously needs unit/integration tests to verify everything is working as intended.
+
+### Original README:
+
 Steps to run:
 - run `yarn install`
 - run `yarn start` to execute code in src/index.ts

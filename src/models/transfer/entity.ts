@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Account } from "../account/entity";
 
+type TransferState = 'pending' | 'cancelled' | 'submitted' | 'success' | 'failed' | 'apiError';
+
 @Entity()
 export class Transfer {
   @PrimaryGeneratedColumn()
@@ -16,6 +18,9 @@ export class Transfer {
   amount: number;
 
   @Column('text', { nullable: true })
-  state: any;
+  state: TransferState;
+
+  @Column('text', { nullable: true })
+  statusMessage: string;
 
 }

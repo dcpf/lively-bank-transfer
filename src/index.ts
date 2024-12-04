@@ -5,9 +5,9 @@ import { createConnection } from "./lib/datasource";
 
 createConnection().then(async connection => {
   const account1 = await AccountManager.createAccount(50);
-  console.log(account1);
   const account2 = await AccountManager.createAccount(50);
-  console.log(account2);
-  const transfer = await TransferManager.createTransfer({ fromAccount: account1, toAccount: account2, amount: 10 });
-  console.log(transfer)
+  await TransferManager.createTransfer({ fromAccount: account1, toAccount: account2, amount: 10, processImmediately: true });
+  await TransferManager.createTransfer({ fromAccount: account1, toAccount: account2, amount: 25, processImmediately: true });
+  await TransferManager.createTransfer({ fromAccount: account1, toAccount: account2, amount: 15 });
+  await TransferManager.createTransfer({ fromAccount: account1, toAccount: account2, amount: 1, processImmediately: true });
 }).catch(error => console.log(error));

@@ -7,6 +7,9 @@ export class Account {
   id: number;
 
   @Column('int')
+  initialBalance: number;
+
+  @Column('int')
   balance: number;
 
 }
